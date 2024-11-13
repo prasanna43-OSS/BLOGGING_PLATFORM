@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogging Platform - Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="/" class="logo">Blogging Platform</a>
+            <ul class="navbar-links">
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('profile') }}">Profile</a></li>
+                <li><a href="{{ url_for('new_post') }}">New Post</a></li>
+                {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('register') }}">Register</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Blog Posts Section -->
+    <div class="blog-posts-container">
+        <h1>Latest Blog Posts</h1>
+        <div class="blog-posts">
+            {% for post in posts %}
+                <div class="blog-post">
+                    <img src="{{ url_for('static', filename='images/' + post.image) }}" alt="Post Image" class="post-image">
+                    <div class="post-content">
+                        <h2>{{ post.title }}</h2>
+                        <p class="post-snippet">{{ post.content[:100] }}...</p>
+                        <a href="{{ url_for('view_post', post_id=post.id) }}" class="read-more">Read more</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Blogging Platform. All rights reserved.</p>
+    </footer>
+</body>
+</html>

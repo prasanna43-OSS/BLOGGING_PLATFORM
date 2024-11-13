@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blogging Platform</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">  <!-- Custom CSS -->
+</head>
+<body>
+    <header>
+        <a href="{{ url_for('home') }}">Home</a>
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('profile') }}">Profile</a>
+            <a href="{{ url_for('new_post') }}">New Post</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('register') }}">Register</a>
+        {% endif %}
+    </header>
+    {% block content %}{% endblock %}
+</body>
+</html>
